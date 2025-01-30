@@ -1,7 +1,6 @@
 import { createClient } from 'redis';
 import { promisify } from 'util';
 
-
 /**
  * Class representing a Redis client.
  */
@@ -28,14 +27,13 @@ class RedisClient {
     return this.client.connected;
   }
 
-
   /**
    * Retrieves a value from Redis by key.
    * @param {string} key - The key to look up in Redis.
    * @returns {Promise<string | null>} - The value associated with the key, or null if not found.
    */
   async get(key) {
-    return await this.getAsync(key);
+    return this.getAsync(key);
   }
 
   /**
@@ -53,8 +51,9 @@ class RedisClient {
    * @param {string} key - Key to remove from Redis
    */
   async del(key) {
-      this.client.del(key);
-  }}
+    this.client.del(key);
+  }
+}
 
 const redisClient = new RedisClient();
 export default redisClient;
