@@ -1,20 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import express from 'express';
-import { getStatus, getStats } from '../controllers/AppController';
+import AppController from '../controllers/AppController';
 
-// const router = express.Router();
-// router.get('/status', getStatus);
-// router.get('/stats', getStats);
+const router = express.Router();
+router.get('/status', (req, res) => {
+  AppController.getStatus(req, res);
+});
+router.get('/stats', (req, res) => {
+  AppController.getStats(req, res);
+});
 
-// export default router;
-
-/**
- * Injects routes with their handlers to the given Express application.
- * @param {Express} api
- */
-const injectRoutes = (api) => {
-  api.get('/status', getStatus);
-  api.get('/stats', getStats);
-};
-
-export default injectRoutes;
+export default router;
