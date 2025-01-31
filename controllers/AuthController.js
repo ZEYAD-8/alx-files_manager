@@ -14,8 +14,17 @@ class AuthController {
     const decodedString = Buffer.from(authorization, 'base64').toString('utf-8');
     const [email, password] = decodedString.split(':');
 
-    const user = await dbClient.db.collection('users').findOne({ email });
-    if (!user || user.password !== sha1(password)) {
+    if (!email || !password) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const data = {
+      email,
+      password: sha1(password),
+    };
+
+    const user = await dbClient.usersCollection.findOne(data);
+    if (!user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
